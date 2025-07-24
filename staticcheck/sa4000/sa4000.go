@@ -24,7 +24,26 @@ var SCAnalyzer = lint.InitializeAnalyzer(&lint.Analyzer{
 		Requires: []*analysis.Analyzer{inspect.Analyzer, generated.Analyzer},
 	},
 	Doc: &lint.RawDocumentation{
-		Title:    `Binary operator has identical expressions on both sides`,
+		Title: `Binary operator has identical expressions on both sides`,
+		Text: `
+For example:
+
+    b := a - a
+
+This assumes that functions do not have side-effects and will flag \"fn() == fn()\":
+
+    if fn() == fn() {
+        /* ... */
+    }
+
+Sometimes, this is a false positive, but this often catches bugs in real code.
+To explicitly allow this comparison, use temporary variables like so:
+
+    a := fn()
+    b := fn()
+    if a == b {
+        /* ... */
+    }`,
 		Since:    "2017.1",
 		Severity: lint.SeverityWarning,
 		MergeIf:  lint.MergeIfAny,
