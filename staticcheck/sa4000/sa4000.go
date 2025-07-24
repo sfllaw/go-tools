@@ -67,7 +67,10 @@ func run(pass *analysis.Pass) (any, error) {
 	// code.
 	//
 	// We special case functions from the math/rand package. Someone ran
-	// into the following false positive: "rand.Intn(2) - rand.Intn(2), which I wrote to generate values {-1, 0, 1} with {0.25, 0.5, 0.25} probability."
+	// into the following false positive:
+	//
+	// "rand.Intn(2) - rand.Intn(2), which I wrote to generate values
+	//  {-1, 0, 1} with {0.25, 0.5, 0.25} probability."
 	fn := func(node ast.Node) {
 		op := node.(*ast.BinaryExpr)
 		switch op.Op {
@@ -134,7 +137,41 @@ func run(pass *analysis.Pass) (any, error) {
 				"(*math/rand.Rand).ExpFloat64",
 				"(*math/rand.Rand).Float32",
 				"(*math/rand.Rand).Float64",
-				"(*math/rand.Rand).NormFloat64":
+				"(*math/rand.Rand).NormFloat64",
+				"math/rand/v2.Int",
+				"math/rand/v2.Int32",
+				"math/rand/v2.Int32N",
+				"math/rand/v2.Int64",
+				"math/rand/v2.Int64N",
+				"math/rand/v2.IntN",
+				"math/rand/v2.N",
+				"math/rand/v2.Uint",
+				"math/rand/v2.Uint32",
+				"math/rand/v2.Uint32N",
+				"math/rand/v2.Uint64",
+				"math/rand/v2.Uint64N",
+				"math/rand/v2.UintN",
+				"math/rand/v2.ExpFloat64",
+				"math/rand/v2.Float32",
+				"math/rand/v2.Float64",
+				"math/rand/v2.NormFloat64",
+				"(*math/rand/v2.Rand).Int",
+				"(*math/rand/v2.Rand).Int32",
+				"(*math/rand/v2.Rand).Int32N",
+				"(*math/rand/v2.Rand).Int64",
+				"(*math/rand/v2.Rand).Int64N",
+				"(*math/rand/v2.Rand).IntN",
+				"(*math/rand/v2.Rand).N",
+				"(*math/rand/v2.Rand).Uint",
+				"(*math/rand/v2.Rand).Uint32",
+				"(*math/rand/v2.Rand).Uint32N",
+				"(*math/rand/v2.Rand).Uint64",
+				"(*math/rand/v2.Rand).Uint64N",
+				"(*math/rand/v2.Rand).UintN",
+				"(*math/rand/v2.Rand).ExpFloat64",
+				"(*math/rand/v2.Rand).Float32",
+				"(*math/rand/v2.Rand).Float64",
+				"(*math/rand/v2.Rand).NormFloat64":
 				return
 			}
 		}
